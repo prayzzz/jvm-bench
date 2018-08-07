@@ -1,11 +1,12 @@
 package net.sprd.bench
 
-import org.openjdk.jmh.annotations.*
+import org.openjdk.jmh.annotations.Benchmark
+import org.openjdk.jmh.annotations.Fork
+import org.openjdk.jmh.annotations.Scope
+import org.openjdk.jmh.annotations.State
 import java.util.stream.Collectors
 
-@Warmup(iterations = 2, time = 2)
-@Measurement(iterations = 2, time = 2)
-@Fork(value = 2)
+@Fork(value = 3)
 open class ListProcessingMultipleSteps {
 
     @State(Scope.Benchmark)

@@ -1,16 +1,17 @@
 package net.sprd.bench
 
-import org.openjdk.jmh.annotations.*
+import org.openjdk.jmh.annotations.Benchmark
+import org.openjdk.jmh.annotations.Fork
+import org.openjdk.jmh.annotations.Scope
+import org.openjdk.jmh.annotations.State
 import java.util.stream.Collectors
 
-@Warmup(iterations = 3, time = 5)
-@Measurement(iterations = 3, time = 5)
-@Fork(value = 2)
-open class ListProcessingOneStep {
+@Fork(value = 3)
+open class ListFiltering {
 
     @State(Scope.Benchmark)
     open class TestData {
-        internal val list = listOf(0..99).flatten()
+        internal val list = ArrayList(listOf(0..99).flatten())
     }
 
     @Benchmark
@@ -26,6 +27,16 @@ open class ListProcessingOneStep {
     @Benchmark
     fun javaStream(l: TestData) {
         l.list.stream().filter { it % 2 == 0 }.collect(Collectors.toList())
+    }
+
+    @Benchmark
+    fun javaRemoveIf(l: TestData) {
+        l.list.removeIf { x -> x % 2 == 1 }
+    }
+
+    @Benchmark
+    fun kotlinRemoveAll(l: TestData) {
+        l.list.removeAll { x -> x % 2 == 1 }
     }
 
     @Benchmark
