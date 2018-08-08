@@ -6,7 +6,7 @@ import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
 import java.util.stream.Collectors
 
-@Fork(value = 3)
+@Fork(value = 2)
 open class ListFiltering {
 
     @State(Scope.Benchmark)
