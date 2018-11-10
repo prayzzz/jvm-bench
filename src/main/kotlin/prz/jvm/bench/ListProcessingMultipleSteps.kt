@@ -1,12 +1,10 @@
-package net.sprd.bench
+package prz.jvm.bench
 
 import org.openjdk.jmh.annotations.Benchmark
-import org.openjdk.jmh.annotations.Fork
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
 import java.util.stream.Collectors
 
-@Fork(value = 2)
 open class ListProcessingMultipleSteps {
 
     @State(Scope.Benchmark)
