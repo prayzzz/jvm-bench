@@ -9,41 +9,44 @@ open class ListFiltering {
 
     @State(Scope.Benchmark)
     open class TestData {
+        internal val divisor = 2
         internal val list = ArrayList(listOf(0..99).flatten())
     }
 
     @Benchmark
-    fun kotlinLib(l: TestData) {
-        l.list.filter { it % 2 == 0 }
+    fun kotlinLib(data: TestData): List<Int> {
+        return data.list.filter { it % data.divisor == 0 }
     }
 
     @Benchmark
-    fun kotlinSeq(l: TestData) {
-        l.list.asSequence().filter { it % 2 == 0 }.toList()
+    fun kotlinSeq(data: TestData): List<Int> {
+        return data.list.asSequence().filter { it % data.divisor == 0 }.toList()
     }
 
     @Benchmark
-    fun javaStream(l: TestData) {
-        l.list.stream().filter { it % 2 == 0 }.collect(Collectors.toList())
+    fun javaStream(data: TestData): List<Int> {
+        return data.list.stream().filter { it % data.divisor == 0 }.collect(Collectors.toList())
     }
 
     @Benchmark
-    fun javaRemoveIf(l: TestData) {
-        l.list.removeIf { x -> x % 2 == 1 }
+    fun javaRemoveIf(data: TestData): Boolean {
+        return data.list.removeIf { x -> x % data.divisor == 1 }
     }
 
     @Benchmark
-    fun kotlinRemoveAll(l: TestData) {
-        l.list.removeAll { x -> x % 2 == 1 }
+    fun kotlinRemoveAll(data: TestData): Boolean {
+        return data.list.removeAll { x -> x % data.divisor == 1 }
     }
 
     @Benchmark
-    fun loop(l: TestData) {
-        val r = mutableListOf<Int>()
-        for (i in l.list) {
-            if (i % 2 == 0) {
-                r.add(i)
+    fun loop(data: TestData): List<Int> {
+        val list = mutableListOf<Int>()
+        for (i in data.list) {
+            if (i % data.divisor == 0) {
+                list.add(i)
             }
         }
+
+        return list
     }
 }

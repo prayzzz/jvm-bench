@@ -1,4 +1,4 @@
-param ([String]$Class = "")
+param ([String]$Class)
 
 # wi - Warmup Iterations: 5
 # w  - Warump Time: 5s

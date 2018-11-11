@@ -9,31 +9,35 @@ open class ListProcessingMultipleSteps {
 
     @State(Scope.Benchmark)
     open class TestData {
+        internal val divisor = 2
+        internal val summand = 1
         internal val list = listOf(0..99).flatten()
     }
 
     @Benchmark
-    fun kotlinLib(l: TestData) {
-        l.list.filter { it % 2 == 0 }.map { it + 1 }
+    fun kotlinLib(data: TestData): List<Int> {
+        return data.list.filter { it % data.divisor == 0 }.map { it + data.summand }
     }
 
     @Benchmark
-    fun kotlinSeq(l: TestData) {
-        l.list.asSequence().filter { it % 2 == 0 }.map { it + 1 }.toList()
+    fun kotlinSeq(data: TestData): List<Int> {
+        return data.list.asSequence().filter { it % data.divisor == 0 }.map { it + data.summand }.toList()
     }
 
     @Benchmark
-    fun javaStream(l: TestData) {
-        l.list.stream().filter { it % 2 == 0 }.map { it + 1 }.collect(Collectors.toList())
+    fun javaStream(data: TestData): List<Int>? {
+        return data.list.stream().filter { it % data.divisor == 0 }.map { it + data.summand }.collect(Collectors.toList())
     }
 
     @Benchmark
-    fun loop(l: TestData) {
-        val r = mutableListOf<Int>()
-        for (i in l.list) {
-            if (i % 2 == 0) {
-                r.add(i + 1)
+    fun loop(data: TestData): List<Int> {
+        val list = mutableListOf<Int>()
+        for (i in data.list) {
+            if (i % data.divisor == 0) {
+                list.add(i + data.summand)
             }
         }
+
+        return list
     }
 }
