@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
-import java.util.*
+import java.util.ArrayList
 import java.util.stream.Collectors
 
 open class StringSplit {
@@ -12,8 +12,8 @@ open class StringSplit {
     @State(Scope.Benchmark)
     open class TestData {
         val names = listOf(
-            "Ruth", "Lorri", "Milford", "Malorie", "Bridgette", "Freeman", "Ronna", "Nguyet", "Zaida",
-            "Tanja", "Mohammad", "Lee", "Wei", "Deborah", "Lynelle", "Margarita", "Anissa", "Nadine"
+                "Ruth", "Lorri", "Milford", "Malorie", "Bridgette", "Freeman", "Ronna", "Nguyet", "Zaida",
+                "Tanja", "Mohammad", "Lee", "Wei", "Deborah", "Lynelle", "Margarita", "Anissa", "Nadine"
         )
         val namesStr = names.joinToString(",")
     }
@@ -49,8 +49,8 @@ open class StringSplit {
         }
 
         return str.split(regex.toRegex()).stream()
-            .map { it.trim() }
-            .filter { StringUtils.isNotBlank(it) }
-            .collect(Collectors.toList())
+                .map { it.trim() }
+                .filter { StringUtils.isNotBlank(it) }
+                .collect(Collectors.toList())
     }
 }
